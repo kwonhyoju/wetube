@@ -14,6 +14,13 @@ const handletest = (req, res) => {
 
 const handleGo = (req, res) => res.send("this is handleGo");
 
+const between = (req,res,next) =>{
+    console.log("this is middleware");
+    next();
+}
+
+app.use(between);
+
 app.get("/", handletest);
 
 app.get("/test", handleGo);

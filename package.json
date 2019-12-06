@@ -5,9 +5,9 @@
     "author": "kwon Hyo Ju",
     "license": "ISC",
     "dependencies": {
-        "@babel/core": "^7.7.4",
+        "@babel/core": "^7.7.5",
         "@babel/node": "^7.7.4",
-        "@babel/preset-env": "^7.7.4",
+        "@babel/preset-env": "^7.7.5",
         "express": "^4.17.1"
     },
     "scripts": {
