@@ -1,5 +1,6 @@
 import express from "express";
+import routes from "../routes";
 
-const videRouter = express.Router();
+const videoRouter = express.Router();
 
-export default videRouter;
+export default videoRouter;
