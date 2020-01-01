@@ -1,4 +1,5 @@
 import { videos } from "../db";
+import routes from "../routes";
 export const home = (req, res) => {
     res.render("home", { pageTitle: "home", videos });
 };
@@ -7,13 +8,21 @@ export const search = (req, res) => {
     const {
         query: { terms: searchingBy }
     } = req;
-    // const searchingBy = req.query.terms;
+    // const searchingBy = req.query.terms;이랑 위랑 같은 얘기
 
-    res.render("search", { pageTitle: "search", searchingBy });
+    res.render("search", { pageTitle: "search", searchingBy ,videos});
 };
 
-export const upload = (req, res) =>
+export const getUpload = (req, res) =>
     res.render("upload", { pageTitle: "upload" });
+
+export const postUpload = (req,res) =>{
+    const{
+        body:{file,title,description}
+    }=req;
+    res.redirect(routes.videoDetail(456789));
+};
+
 
 export const videoDetail = (req, res) =>
     res.render("videoDetail", { pageTitle: "home" });
