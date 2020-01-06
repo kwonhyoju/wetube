@@ -1,6 +1,16 @@
 import routes from "../routes";
-export const home = (req, res) => {
-    res.render("home", { pageTitle: "home", videos });
+import Video from "../models/Video";
+
+export const home = async(req, res) => {
+    try{
+        const videos = await Video.find({});
+        // await는 성공여부와 상관없이 끝나기를 기다린다.
+        res.render("home", { pageTitle: "home", videos });
+    } catch(error){
+        // 그래서 이렇게 error catch 해줘야 한다.
+        console.log("error:::::",error);
+        res.render("home", { pageTitle: "home", videos:[]});
+    }
 };
 
 export const search = (req, res) => {
