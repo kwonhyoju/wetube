@@ -1,15 +1,15 @@
 import routes from "../routes";
 import Video from "../models/Video";
 
-export const home = async(req, res) => {
-    try{
+export const home = async (req, res) => {
+    try {
         const videos = await Video.find({});
         // await는 성공여부와 상관없이 끝나기를 기다린다.
         res.render("home", { pageTitle: "home", videos });
-    } catch(error){
+    } catch (error) {
         // 그래서 이렇게 error catch 해줘야 한다.
-        console.log("error:::::",error);
-        res.render("home", { pageTitle: "home", videos:[]});
+        console.log("error:::::", error);
+        res.render("home", { pageTitle: "home", videos: [] });
     }
 };
 
@@ -19,19 +19,27 @@ export const search = (req, res) => {
     } = req;
     // const searchingBy = req.query.terms;이랑 위랑 같은 얘기
 
-    res.render("search", { pageTitle: "search", searchingBy ,videos});
+    res.render("search", { pageTitle: "search", searchingBy, videos });
 };
 
 export const getUpload = (req, res) =>
     res.render("upload", { pageTitle: "upload" });
 
-export const postUpload = (req,res) =>{
-    const{
-        body:{file,title,description}
-    }=req;
-    res.redirect(routes.videoDetail(456789));
-};
+export const postUpload = async (req, res) => {
+    const {
+        body: { title, description },
+        file: { path }
+    } = req;
+    // console.log("body::::", body, "file::::", file);
+    const newVideo = await Video.create({
+        fileUrl: path,
+        title,
+        description
+    });
+    console.log(newVideo);
 
+    res.redirect(routes.videoDetail(newVideo.id));
+};
 
 export const videoDetail = (req, res) =>
     res.render("videoDetail", { pageTitle: "home" });
