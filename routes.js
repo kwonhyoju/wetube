@@ -15,6 +15,7 @@ const CHANGE_PASSWORD = "/change-password";
 const VIDEOS = "/videos";
 const UPLOAD = "/upload";
 const VIDEO_DETAIL = "/:id";
+// 여기서 id가 req를 보낼때 param에 저장되는 이름
 const EDIT_VIDEO = "/:id/edit";
 const DELETE_VIDEO = "/:id/delete";
 
@@ -25,10 +26,10 @@ const routes = {
     logout: LOGOUT,
     search: SEARCH,
     users: USERS,
-    userDetail: id=>{
-        if(id){
-           return `/user/${id}`;
-        }else{
+    userDetail: id => {
+        if (id) {
+            return `/user/${id}`;
+        } else {
             return USER_DETAIL;
         }
     },
@@ -36,10 +37,10 @@ const routes = {
     changePassword: CHANGE_PASSWORD,
     videos: VIDEOS,
     upload: UPLOAD,
-    videoDetail: id=>{
-        if(id){
-            return `/videos/${id}`
-        }else{
+    videoDetail: id => {
+        if (id) {
+            return `/videos/${id}`;
+        } else {
             return VIDEO_DETAIL;
         }
     },

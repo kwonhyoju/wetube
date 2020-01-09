@@ -41,8 +41,22 @@ export const postUpload = async (req, res) => {
     res.redirect(routes.videoDetail(newVideo.id));
 };
 
-export const videoDetail = (req, res) =>
-    res.render("videoDetail", { pageTitle: "home" });
+export const videoDetail = async (req, res) => {
+    // console.log(":::::::aaa:::::", req.params.id);
+    const {
+        params: { id }
+    } = req;
+
+    try {
+        const video = await Video.findById(id);
+        // model에서 mongoDB로 export한 Video에 id(비디오의 고유 id)를 찾는다는것
+        // console.log(":::::modelVideo에저장한 영상의 고유 정보::::::", video);
+        res.render("videoDetail", { pageTitle: "home", video });
+    } catch (error) {
+        console.log(error);
+        res.redirect(routes.home);
+    }
+};
 
 export const editVideo = (req, res) =>
     res.render("editVideo", { pageTitle: "editvideo" });
