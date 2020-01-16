@@ -3,7 +3,7 @@ import Video from "../models/Video";
 
 export const home = async (req, res) => {
     try {
-        const videos = await Video.find({});
+        const videos = await Video.find({}).sort({ _id: -1 });
         // await는 성공여부와 상관없이 끝나기를 기다린다.
         res.render("home", { pageTitle: "home", videos });
     } catch (error) {
@@ -51,38 +51,44 @@ export const videoDetail = async (req, res) => {
         const video = await Video.findById(id);
         // model에서 mongoDB로 export한 Video에 id(비디오의 고유 id)를 찾는다는것
         // console.log(":::::modelVideo에저장한 영상의 고유 정보::::::", video);
-        res.render("videoDetail", { pageTitle: "home", video });
+        res.render("videoDetail", { pageTitle: video.title, video });
     } catch (error) {
         console.log(error);
         res.redirect(routes.home);
     }
 };
 
-export const getEditVideo = async(req, res) =>{
+export const getEditVideo = async (req, res) => {
     const {
-        params:{id}
-    }=req;
-    try{
-        const video=await Video.findById(id);
-        res.render("editVideo",{pageTitle:`Edit ${video.title}`,video});
-    }catch(error){
+        params: { id }
+    } = req;
+    try {
+        const video = await Video.findById(id);
+        res.render("editVideo", { pageTitle: `Edit ${video.title}`, video });
+    } catch (error) {
         res.redirect(routes.home);
     }
-}
+};
 
-export const postEditVideo =async(req,res)=>{
+export const postEditVideo = async (req, res) => {
     const {
-        params:{id},
-        body:{title,description}
-    }=req;
-    try{
-        await Video.findOneAndUpdate({_id:id},{title,description});
+        params: { id },
+        body: { title, description }
+    } = req;
+    try {
+        await Video.findOneAndUpdate({ _id: id }, { title, description });
         res.redirect(routes.videoDetail(id));
-    }catch(error){
+    } catch (error) {
         res.render(routes.home);
     }
 };
-    
 
-export const deleteVideo = (req, res) =>
-    res.render("deleteVideo", { pageTitle: "deleteVideo" });
+export const deleteVideo = async (req, res) => {
+    const {
+        params: { id }
+    } = req;
+    try {
+        await Video.findOneAndRemove({ _id: id });
+    } catch (error) {}
+    res.redirect(routes.home);
+};
