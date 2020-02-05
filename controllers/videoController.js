@@ -13,11 +13,20 @@ export const home = async (req, res) => {
     }
 };
 
-export const search = (req, res) => {
+export const search = async (req, res) => {
     const {
         query: { terms: searchingBy }
     } = req;
     // const searchingBy = req.query.terms;이랑 위랑 같은 얘기
+    // 비워둔 videos에 아무것도 찾지 못해서 빈 값이 돌아오면 화면에 빈값으로 출력이 된다.
+    let videos = [];
+    try {
+        videos = await Video.find({
+            title: { $regex: searchingBy, $options: "i" }
+        });
+    } catch (error) {
+        console.log(error);
+    }
 
     res.render("search", { pageTitle: "search", searchingBy, videos });
 };
