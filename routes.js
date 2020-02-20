@@ -6,7 +6,7 @@ const LOGOUT = "/logout";
 const SEARCH = "/search";
 
 //Users
-const USERS = "/user";
+const USERS = "/users";
 const USER_DETAIL = "/:id";
 const EDIT_PROFILE = "/edit-profile";
 const CHANGE_PASSWORD = "/change-password";
@@ -28,7 +28,7 @@ const routes = {
     users: USERS,
     userDetail: id => {
         if (id) {
-            return `/user/${id}`;
+            return `/users/${id}`;
         } else {
             return USER_DETAIL;
         }
